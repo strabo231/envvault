@@ -1,3 +1,5 @@
+[![Test EnvVault](https://github.com/strabo231/envvault/actions/workflows/test.yml/badge.svg)](https://github.com/strabo231/envvault/actions/workflows/test.yml)
+
 # EnvVault - Secure Environment Variable Manager
 
 Stop committing secrets! EnvVault securely manages environment variables across dev, staging, and production.
