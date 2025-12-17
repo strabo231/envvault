@@ -1,0 +1,45 @@
+name: Test EnvVault
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install jq
+      run: sudo apt-get update && sudo apt-get install -y jq
+    
+    - name: Make executable
+      run: chmod +x envvault
+    
+    - name: Test help
+      run: ./envvault --help
+    
+    - name: Test version
+      run: ./envvault --version
+    
+    - name: Initialize vault
+      run: ./envvault init
+    
+    - name: Set variable
+      run: ./envvault set TEST_VAR "test_value" --env test
+    
+    - name: Get variable
+      run: ./envvault get TEST_VAR --env test
+    
+    - name: List variables
+      run: ./envvault list --env test
+    
+    - name: Export .env
+      run: ./envvault export --env test
+    
+    - name: Shellcheck
+      run: sudo apt-get install -y shellcheck && shellcheck envvault || true
+    
+    - name: Structure check
+      run: |
+        grep -q "init_vault()" envvault
+        grep -q "set_variable()" envvault
+        grep -q "get_variable()" envvault
